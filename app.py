@@ -1,12 +1,13 @@
 import streamlit as st
 import pandas as pd
 import pickle 
+import os
 
 st.title("Movie Recommendation System")
-dataframe=pickle.load(open("datadict.pkl",'rb'))
+dataframe=pickle.load(open("app_data/datadict.pkl",'rb'))
 movie=pd.DataFrame(dataframe)
 movie_list=movie['title'].values
-Similarities=pickle.load(open("Similarities.pkl",'rb'))
+Similarities=pickle.load(open("app_data/Similarities.pkl",'rb'))
 import requests
 
 
@@ -14,7 +15,9 @@ def fetch_poster(movies_id):
     response=requests.get("https://api.themoviedb.org/3/movie/{}?api_key=5e72a0d99a34a95a327beb04c54da972&language-en-US".format(movies_id))
     data=response.json()
     
+    
     return "https://image.tmdb.org/t/p/w500/"+data['poster_path']
+
 
 
 def Recommend(movie_title):
